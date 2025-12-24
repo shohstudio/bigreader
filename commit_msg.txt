@@ -1,5 +1,3 @@
-Feat: Enable User Persistence in Admin Panel
+Fix: Remove mock user 'Guli Karimova'
 
-- Updated Register.jsx to save new users to 'all_users' in localStorage.
-- Updated AdminDashboard.jsx to load and display users from localStorage.
-- This allows newly registered users to appear in the Admin Panel dynamically.
+- Removed user ID 3 (Guli Karimova) from src/data.js as per user request.

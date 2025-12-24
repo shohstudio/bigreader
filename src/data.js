@@ -58,7 +58,6 @@ export const books = [
 export const users = [
     { id: 1, name: "Ali Valiyev", email: "ali@example.com", role: "user", joinedDate: "2023-12-01" },
     { id: 2, name: "Vali Aliyev", email: "vali@example.com", role: "user", joinedDate: "2023-12-05" },
-    { id: 3, name: "Guli Karimova", email: "guli@example.com", role: "user", joinedDate: "2023-12-10" },
     { id: 4, name: "Admin User", email: "admin@bigreader.uz", role: "admin", joinedDate: "2023-11-01" }
 ];
 
