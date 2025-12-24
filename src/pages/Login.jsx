@@ -15,7 +15,7 @@ export default function Login() {
     const handleLogin = (e) => {
         e.preventDefault();
 
-        if (email === 'admin@bigreader.uz' && password === 'admin123') {
+        if (email.trim() === 'admin@bigreader.uz' && password.trim() === 'admin123') {
             const adminUser = {
                 firstName: 'Admin',
                 lastName: 'User',

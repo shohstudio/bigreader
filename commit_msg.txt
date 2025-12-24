@@ -1,4 +1,4 @@
-Fix: Switch to HashRouter for GitHub Pages support
+Fix: Enhance Login robustness and trigger new build
 
-- Replaced BrowserRouter with HashRouter in App.jsx.
-- This resolves 404 errors on page refresh by leveraging hash-based navigation.
+- Added .trim() to admin credentials check in Login.jsx.
+- This commit forces a new deployment to ensure HashRouter and Admin logic are propagated to the user.
