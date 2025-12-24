@@ -67,6 +67,20 @@ export default function Register() {
         console.log("Secure Data:", secureData);
         // Save encrypted profile
         localStorage.setItem('user_profile', encryptedProfile);
+
+        // Add to mock database for Admin Panel
+        const newUser = {
+            id: Date.now(),
+            name: `${formData.firstName} ${formData.lastName}`,
+            email: formData.email,
+            role: 'user',
+            joinedDate: new Date().toISOString().split('T')[0]
+        };
+
+        const existingUsers = JSON.parse(localStorage.getItem('all_users') || "[]");
+        existingUsers.push(newUser);
+        localStorage.setItem('all_users', JSON.stringify(existingUsers));
+
         // Also save simple flag for easier login check in this demo (optional)
         // localStorage.setItem('is_registered', 'true');
 

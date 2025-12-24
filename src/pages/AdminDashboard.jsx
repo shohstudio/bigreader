@@ -22,7 +22,13 @@ export default function AdminDashboard() {
         navigate('/login');
     };
 
-    const [usersList, setUsersList] = useState(users);
+    const [usersList, setUsersList] = useState(() => {
+        const localUsers = JSON.parse(localStorage.getItem('all_users') || "[]");
+        // Filter out duplicates based on email if necessary, or just combine
+        // For this demo, we'll just combine mock users + local users
+        // Avoid adding mock users again if they are already "saved" (not handling deep merge here for simplicity)
+        return [...users, ...localUsers];
+    });
     const [booksList, setBooksList] = useState(books);
 
     const handleDeleteUser = (id) => {

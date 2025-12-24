@@ -1,4 +1,5 @@
-Fix: Enhance Login robustness and trigger new build
+Feat: Enable User Persistence in Admin Panel
 
-- Added .trim() to admin credentials check in Login.jsx.
-- This commit forces a new deployment to ensure HashRouter and Admin logic are propagated to the user.
+- Updated Register.jsx to save new users to 'all_users' in localStorage.
+- Updated AdminDashboard.jsx to load and display users from localStorage.
+- This allows newly registered users to appear in the Admin Panel dynamically.
