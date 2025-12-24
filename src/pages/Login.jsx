@@ -15,6 +15,18 @@ export default function Login() {
     const handleLogin = (e) => {
         e.preventDefault();
 
+        if (email === 'admin@bigreader.uz' && password === 'admin123') {
+            const adminUser = {
+                firstName: 'Admin',
+                lastName: 'User',
+                email: 'admin@bigreader.uz',
+                role: 'admin'
+            };
+            localStorage.setItem('current_user', JSON.stringify(adminUser));
+            navigate('/admin');
+            return;
+        }
+
         const encryptedProfile = localStorage.getItem('user_profile');
         if (!encryptedProfile) {
             alert("Foydalanuvchi topilmadi. Iltimos avval ro'yxatdan o'ting.");
@@ -30,7 +42,7 @@ export default function Login() {
         const inputHash = hashPassword(password);
 
         if (user.email === email && user.password === inputHash) {
-            localStorage.setItem('current_user', JSON.stringify(user));
+            localStorage.setItem('current_user', JSON.stringify({ ...user, role: 'user' }));
             navigate('/');
         } else {
             alert("Email yoki parol noto'g'ri!");

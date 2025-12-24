@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, LogOut, User as UserIcon, Book, ShoppingBag } from 'lucide-react';
+import { Search, LogOut, User as UserIcon, Book, ShoppingBag, CheckCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BookCard } from '../components/BookCard';
 import { Input } from '../components/Input';
+import { PurchaseModal } from '../components/PurchaseModal';
+import { TestModal } from '../components/TestModal';
 import { books } from '../data';
 
 export default function Home() {
@@ -11,6 +13,9 @@ export default function Home() {
     const [activeTab, setActiveTab] = useState('library'); // library, my_books, shop
     const [searchQuery, setSearchQuery] = useState('');
     const [user, setUser] = useState(null);
+    const [selectedBook, setSelectedBook] = useState(null);
+    const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
+    const [isTestModalOpen, setIsTestModalOpen] = useState(false);
 
     useEffect(() => {
         const storedUser = localStorage.getItem('current_user');
@@ -24,6 +29,22 @@ export default function Home() {
     const handleLogout = () => {
         localStorage.removeItem('current_user');
         navigate('/login');
+    };
+
+    const handleBuyClick = (book) => {
+        setSelectedBook(book);
+        setIsPurchaseModalOpen(true);
+    };
+
+    const handleReadClick = (book) => {
+        if (book.isRead) {
+            alert("Bu kitobni allaqachon o'qigansiz!");
+            return;
+        }
+        // const confirmRead = window.confirm("Kitobni o'qib bo'ldingizmi? Test ishlashga tayyormisiz?");
+        // if (confirmRead) {
+        setIsTestModalOpen(true);
+        // }
     };
 
     const filteredBooks = books.filter(book =>
@@ -45,6 +66,21 @@ export default function Home() {
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-900/20 rounded-full blur-[100px]" />
                 <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-emerald-900/20 rounded-full blur-[100px]" />
             </div>
+
+            {isTestModalOpen && (
+                <TestModal
+                    isOpen={isTestModalOpen}
+                    onClose={() => setIsTestModalOpen(false)}
+                />
+            )}
+
+            {selectedBook && (
+                <PurchaseModal
+                    book={selectedBook}
+                    isOpen={isPurchaseModalOpen}
+                    onClose={() => setIsPurchaseModalOpen(false)}
+                />
+            )}
 
             {/* Header */}
             <div className="relative z-10 bg-white/5 backdrop-blur-xl border-b border-white/10 sticky top-0">
@@ -77,6 +113,16 @@ export default function Home() {
                                 </div>
                                 <span className="text-white font-medium">{user?.firstName}</span>
                             </div>
+
+                            {user?.role === 'admin' && (
+                                <Link
+                                    to="/admin"
+                                    className="hidden sm:flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl transition-colors font-medium text-sm"
+                                >
+                                    Admin Panel
+                                </Link>
+                            )}
+
                             <button
                                 onClick={handleLogout}
                                 className="p-2.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
@@ -134,6 +180,8 @@ export default function Home() {
                                 key={book.id}
                                 book={book}
                                 isPurchasable={activeTab === 'shop'}
+                                onBuyClick={handleBuyClick}
+                                onReadClick={handleReadClick}
                             />
                         ))}
                     </div>

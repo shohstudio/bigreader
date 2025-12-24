@@ -1,18 +1,14 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle, ShoppingCart } from 'lucide-react';
 import { Button } from './Button';
 import { startTest } from '../utils/testHandler';
 
-export function BookCard({ book, isPurchasable = false }) {
+export function BookCard({ book, isPurchasable = false, onBuyClick, onReadClick }) {
     const handleReadClick = () => {
-        if (book.isRead) {
-            alert("Bu kitobni allaqachon o'qigansiz!");
-            return;
-        }
-        const confirmRead = window.confirm("Kitobni o'qib bo'ldingizmi? Test ishlashga tayyormisiz?");
-        if (confirmRead) {
-            startTest(book.id);
+        if (onReadClick) {
+            onReadClick(book);
         }
     };
 
@@ -49,7 +45,7 @@ export function BookCard({ book, isPurchasable = false }) {
                     {isPurchasable ? (
                         <div className="flex items-center justify-between">
                             <span className="text-emerald-400 font-bold text-lg">{book.price?.toLocaleString()} so'm</span>
-                            <Button variant="primary" className="py-2 px-4 text-sm">
+                            <Button variant="primary" className="py-2 px-4 text-sm" onClick={() => onBuyClick(book)}>
                                 <ShoppingCart size={16} /> Sotib olish
                             </Button>
                         </div>

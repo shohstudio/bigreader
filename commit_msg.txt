@@ -1,0 +1,7 @@
+Feat: Implement Admin Panel, Shop, and Test features
+
+- Added Admin Dashboard with Stats, Users, and Books management.
+- Implemented Shop functionality with Purchase Modal.
+- Integrated Hot Potato Test Modal in Library.
+- Added hardcoded Admin login (admin@bigreader.uz).
+- Configured GitHub Pages deployment.

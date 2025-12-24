@@ -54,3 +54,16 @@ export const books = [
         isRead: false
     }
 ];
+
+export const users = [
+    { id: 1, name: "Ali Valiyev", email: "ali@example.com", role: "user", joinedDate: "2023-12-01" },
+    { id: 2, name: "Vali Aliyev", email: "vali@example.com", role: "user", joinedDate: "2023-12-05" },
+    { id: 3, name: "Guli Karimova", email: "guli@example.com", role: "user", joinedDate: "2023-12-10" },
+    { id: 4, name: "Admin User", email: "admin@bigreader.uz", role: "admin", joinedDate: "2023-11-01" }
+];
+
+export const orders = [
+    { id: 101, userId: 1, bookId: 1, status: "completed", date: "2023-12-20", amount: 45000 },
+    { id: 102, userId: 2, bookId: 3, status: "pending", date: "2023-12-22", amount: 35000 },
+    { id: 103, userId: 1, bookId: 2, status: "completed", date: "2023-12-23", amount: 40000 },
+];
