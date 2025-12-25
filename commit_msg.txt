@@ -1,3 +1,0 @@
-Fix: Remove mock user 'Guli Karimova'
-
-- Removed user ID 3 (Guli Karimova) from src/data.js as per user request.
