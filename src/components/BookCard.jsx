@@ -1,12 +1,19 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, CheckCircle, ShoppingCart } from 'lucide-react';
+import { BookOpen, CheckCircle, ExternalLink } from 'lucide-react';
 import { Button } from './Button';
-import { startTest } from '../utils/testHandler';
 
-export function BookCard({ book, isPurchasable = false, onBuyClick, onReadClick }) {
-    const handleReadClick = () => {
+export function BookCard({ book, onReadClick }) {
+    const handleReadBook = () => {
+        if (book.pdfUrl && book.pdfUrl !== "#") {
+            window.open(book.pdfUrl, '_blank');
+        } else {
+            alert("Ushbu kitobning elektron varianti tez orada yuklanadi.");
+        }
+    };
+
+    const handleTestClick = () => {
         if (onReadClick) {
             onReadClick(book);
         }
@@ -41,26 +48,30 @@ export function BookCard({ book, isPurchasable = false, onBuyClick, onReadClick 
                     <p className="text-white/60 text-sm mb-3">{book.author}</p>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-white/10">
-                    {isPurchasable ? (
-                        <div className="flex items-center justify-between">
-                            <span className="text-emerald-400 font-bold text-lg">{book.price?.toLocaleString()} so'm</span>
-                            <Button variant="primary" className="py-2 px-4 text-sm" onClick={() => onBuyClick(book)}>
-                                <ShoppingCart size={16} /> Sotib olish
-                            </Button>
-                        </div>
-                    ) : (
+                <div className="mt-4 pt-4 border-t border-white/10 space-y-2">
+                    <Button
+                        onClick={handleReadBook}
+                        className="w-full py-2 text-sm bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20"
+                    >
+                        <span className="flex items-center justify-center gap-2">
+                            <BookOpen size={16} /> O'qish
+                        </span>
+                    </Button>
+
+                    {!book.isRead && (
                         <Button
-                            variant={book.isRead ? "secondary" : "primary"}
-                            className="w-full py-2 text-sm"
-                            onClick={handleReadClick}
+                            variant="secondary"
+                            className="w-full py-2 text-sm bg-white/10 hover:bg-white/20 text-white border-none"
+                            onClick={handleTestClick}
                         >
-                            {book.isRead ? (
-                                <span className="flex items-center gap-2"><CheckCircle size={16} /> Test topshirilgan</span>
-                            ) : (
-                                <span className="flex items-center gap-2"><BookOpen size={16} /> O'qib bo'ldim</span>
-                            )}
+                            Test ishlash
                         </Button>
+                    )}
+
+                    {book.isRead && (
+                        <div className="text-center text-emerald-400 text-xs font-medium">
+                            Test muvaffaqiyatli topshirildi
+                        </div>
                     )}
                 </div>
             </div>

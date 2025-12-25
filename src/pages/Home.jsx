@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, LogOut, User as UserIcon, Book, ShoppingBag, CheckCircle } from 'lucide-react';
+import { Search, LogOut, User as UserIcon, Book, CheckCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BookCard } from '../components/BookCard';
-import { Input } from '../components/Input';
-import { PurchaseModal } from '../components/PurchaseModal';
 import { TestModal } from '../components/TestModal';
 import { books } from '../data';
 
 export default function Home() {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState('library'); // library, my_books, shop
+    const [activeTab, setActiveTab] = useState('library'); // library, my_books
     const [searchQuery, setSearchQuery] = useState('');
     const [user, setUser] = useState(null);
-    const [selectedBook, setSelectedBook] = useState(null);
-    const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
     const [isTestModalOpen, setIsTestModalOpen] = useState(false);
 
     useEffect(() => {
@@ -31,20 +27,12 @@ export default function Home() {
         navigate('/login');
     };
 
-    const handleBuyClick = (book) => {
-        setSelectedBook(book);
-        setIsPurchaseModalOpen(true);
-    };
-
-    const handleReadClick = (book) => {
+    const handleTestClick = (book) => {
         if (book.isRead) {
             alert("Bu kitobni allaqachon o'qigansiz!");
             return;
         }
-        // const confirmRead = window.confirm("Kitobni o'qib bo'ldingizmi? Test ishlashga tayyormisiz?");
-        // if (confirmRead) {
         setIsTestModalOpen(true);
-        // }
     };
 
     const filteredBooks = books.filter(book =>
@@ -54,7 +42,7 @@ export default function Home() {
 
     const getDisplayedBooks = () => {
         if (activeTab === 'my_books') {
-            return filteredBooks.filter(b => b.isRead); // Mock logic for 'my books'
+            return filteredBooks.filter(b => b.isRead);
         }
         return filteredBooks;
     };
@@ -71,14 +59,6 @@ export default function Home() {
                 <TestModal
                     isOpen={isTestModalOpen}
                     onClose={() => setIsTestModalOpen(false)}
-                />
-            )}
-
-            {selectedBook && (
-                <PurchaseModal
-                    book={selectedBook}
-                    isOpen={isPurchaseModalOpen}
-                    onClose={() => setIsPurchaseModalOpen(false)}
                 />
             )}
 
@@ -153,15 +133,6 @@ export default function Home() {
                                 O'qilganlar
                             </div>
                         </button>
-                        <button
-                            onClick={() => setActiveTab('shop')}
-                            className={`pb-3 text-sm font-semibold border-b-2 transition-colors whitespace-nowrap ${activeTab === 'shop' ? 'border-emerald-500 text-white' : 'border-transparent text-white/50 hover:text-white/80'}`}
-                        >
-                            <div className="flex items-center gap-2">
-                                <ShoppingBag size={18} />
-                                Kitob do'koni
-                            </div>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -179,9 +150,7 @@ export default function Home() {
                             <BookCard
                                 key={book.id}
                                 book={book}
-                                isPurchasable={activeTab === 'shop'}
-                                onBuyClick={handleBuyClick}
-                                onReadClick={handleReadClick}
+                                onReadClick={handleTestClick}
                             />
                         ))}
                     </div>
