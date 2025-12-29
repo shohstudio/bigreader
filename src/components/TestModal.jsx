@@ -3,17 +3,35 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle, BrainCircuit } from 'lucide-react';
 import { Button } from './Button';
 
-export function TestModal({ isOpen, onClose }) {
+export function TestModal({ isOpen, onClose, book }) {
     const [currentStep, setCurrentStep] = useState('intro'); // intro, test, result
     const [score, setScore] = useState(0);
+    const [questions, setQuestions] = useState([]);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
     const startTest = () => {
+        if (!book?.questions) return;
+
+        // Shuffle and pick 10 questions
+        const shuffled = [...book.questions].sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 10);
+        setQuestions(selected);
+        setCurrentQuestionIndex(0);
+        setScore(0);
         setCurrentStep('test');
-        // Simulate test completion after 3 seconds for demo
-        setTimeout(() => {
-            setScore(85);
+    };
+
+    const handleAnswer = (optionIndex) => {
+        const currentQuestion = questions[currentQuestionIndex];
+        if (optionIndex === currentQuestion.correctAnswer) {
+            setScore(prev => prev + 1);
+        }
+
+        if (currentQuestionIndex < questions.length - 1) {
+            setCurrentQuestionIndex(prev => prev + 1);
+        } else {
             setCurrentStep('result');
-        }, 3000);
+        }
     };
 
     return (
@@ -46,10 +64,10 @@ export function TestModal({ isOpen, onClose }) {
                                 <div className="w-20 h-20 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                                     <BrainCircuit className="text-purple-400 w-10 h-10" />
                                 </div>
-                                <h2 className="text-3xl font-bold text-white">Hot Potato Testi</h2>
+                                <h2 className="text-3xl font-bold text-white">{book?.title || 'Test'}</h2>
                                 <p className="text-white/60 text-lg max-w-md mx-auto">
                                     Kitobni o'qib bo'ldingizmi? Unda bilimingizni sinab ko'rish vaqti keldi!
-                                    Test davomida savollarga tezkor javob berishingiz kerak.
+                                    Bu test 10 ta savoldan iborat.
                                 </p>
                                 <Button onClick={startTest} className="px-8 py-4 text-lg font-bold bg-gradient-to-r from-purple-500 to-indigo-600 shadow-lg shadow-purple-500/25">
                                     Testni Boshlash
@@ -57,12 +75,38 @@ export function TestModal({ isOpen, onClose }) {
                             </div>
                         )}
 
-                        {currentStep === 'test' && (
-                            <div className="space-y-6">
-                                <h2 className="text-2xl font-bold text-white animate-pulse">Test yuklanmoqda...</h2>
-                                <p className="text-white/40">Hot Potato tizimi bilan aloqa o'rnatilmoqda</p>
-                                <div className="w-64 h-2 bg-white/10 rounded-full overflow-hidden mx-auto">
-                                    <div className="h-full bg-purple-500 animate-progress" />
+                        {currentStep === 'test' && questions.length > 0 && (
+                            <div className="w-full max-w-lg space-y-6">
+                                <div className="flex justify-between items-center text-white/40 text-sm font-medium">
+                                    <span>Savol {currentQuestionIndex + 1}/{questions.length}</span>
+                                    <span>Ball: {score}</span>
+                                </div>
+
+                                <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                                    <motion.div
+                                        className="h-full bg-purple-500"
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
+                                    />
+                                </div>
+
+                                <h3 className="text-xl font-bold text-white leading-relaxed">
+                                    {questions[currentQuestionIndex].question}
+                                </h3>
+
+                                <div className="grid gap-3">
+                                    {questions[currentQuestionIndex].options.map((option, idx) => (
+                                        <button
+                                            key={idx}
+                                            onClick={() => handleAnswer(idx)}
+                                            className="w-full text-left px-6 py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-purple-500/50 transition-all text-white/90 hover:text-white font-medium group"
+                                        >
+                                            <span className="inline-block w-6 h-6 rounded-full bg-white/10 text-white/60 text-xs flex items-center justify-center mr-3 group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                                                {String.fromCharCode(65 + idx)}
+                                            </span>
+                                            {option}
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
                         )}
@@ -72,13 +116,16 @@ export function TestModal({ isOpen, onClose }) {
                                 <div className="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
                                     <CheckCircle className="text-emerald-400 w-12 h-12" />
                                 </div>
-                                <h2 className="text-3xl font-bold text-white">Natija: {score}%</h2>
+                                <h2 className="text-3xl font-bold text-white">Natija: {score} / {questions.length}</h2>
                                 <p className="text-white/60 text-lg">
-                                    Tabriklaymiz! Siz kitobni yaxshi o'zlashtiribsiz.
+                                    {score >= 8 ? "Qoyil! Ajoyib natija." : score >= 5 ? "Yaxshi, lekin yanada yaxshiroq bo'lishi mumkin." : "Kitobni qayta o'qib chiqishni maslahat beramiz."}
                                 </p>
                                 <div className="flex gap-4 justify-center">
                                     <Button variant="secondary" onClick={onClose}>
                                         Yopish
+                                    </Button>
+                                    <Button onClick={startTest}>
+                                        Qayta topshirish
                                     </Button>
                                 </div>
                             </div>

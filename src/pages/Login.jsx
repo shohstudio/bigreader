@@ -8,7 +8,7 @@ import { hashPassword, decryptData } from '../utils/security';
 
 export default function Login() {
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
+    const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -23,22 +23,44 @@ export default function Login() {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        if (email.trim() === 'admin@bigreader.uz' && password.trim() === 'admin123') {
+
+        // Check hardcoded admin fallback
+        if (identifier.trim() === 'admin@bigreader.uz' && password.trim() === 'admin123') {
             const adminUser = { firstName: 'Admin', lastName: 'User', email: 'admin@bigreader.uz', role: 'admin' };
             localStorage.setItem('current_user', JSON.stringify(adminUser));
             navigate('/admin');
             return;
         }
-        const encryptedProfile = localStorage.getItem('user_profile');
-        if (!encryptedProfile) { alert("Foydalanuvchi topilmadi."); return; }
-        const user = decryptData(encryptedProfile);
-        const inputHash = hashPassword(password);
 
-        if (user && user.email === email && user.password === inputHash) {
-            localStorage.setItem('current_user', JSON.stringify({ ...user, role: 'user' }));
-            navigate('/');
+        // Check against all_users
+        const allUsers = JSON.parse(localStorage.getItem('all_users') || "[]");
+
+        // Find user by username OR email
+        const user = allUsers.find(u =>
+            (u.username === identifier || u.email === identifier) &&
+            u.password === password
+        );
+
+        if (user) {
+            localStorage.setItem('current_user', JSON.stringify(user));
+            if (user.role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/');
+            }
         } else {
-            alert("Email yoki parol noto'g'ri!");
+            // Legacy check for single user_profile (optional, can be kept for backward compatibility)
+            const encryptedProfile = localStorage.getItem('user_profile');
+            if (encryptedProfile) {
+                const legacyUser = decryptData(encryptedProfile);
+                const inputHash = hashPassword(password);
+                if (legacyUser && legacyUser.email === identifier && legacyUser.password === inputHash) {
+                    localStorage.setItem('current_user', JSON.stringify({ ...legacyUser, role: 'user' }));
+                    navigate('/');
+                    return;
+                }
+            }
+            alert("Login, email yoki parol noto'g'ri!");
         }
     };
 
@@ -83,11 +105,11 @@ export default function Login() {
                             <div className="relative group/input">
                                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-teal-600 group-focus-within/input:text-emerald-600 transition-colors" />
                                 <Input
-                                    placeholder="Elektron pochta"
+                                    placeholder="Login yoki Email"
                                     className="pl-12 bg-white/50 border-white/50 text-teal-900 placeholder:text-teal-600/60 focus:bg-white focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/20 rounded-2xl h-14 transition-all"
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    type="text"
+                                    value={identifier}
+                                    onChange={(e) => setIdentifier(e.target.value)}
                                 />
                             </div>
                             <div className="relative group/input">
@@ -120,4 +142,4 @@ export default function Login() {
             </motion.div>
         </div>
     );
-}
+} 14
