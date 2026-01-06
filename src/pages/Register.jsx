@@ -68,11 +68,14 @@ export default function Register() {
         // Save encrypted profile
         localStorage.setItem('user_profile', encryptedProfile);
 
-        // Add to mock database for Admin Panel
+        // Add to mock database for Admin Panel & Login
         const newUser = {
             id: Date.now(),
             name: `${formData.firstName} ${formData.lastName}`,
+            firstName: formData.firstName, // Save for personalized greeting/logic
+            username: formData.firstName.toLowerCase(), // Allow login by firstname
             email: formData.email,
+            password: formData.password, // Storing plain for this local demo to match Login logic
             role: 'user',
             joinedDate: new Date().toISOString().split('T')[0]
         };

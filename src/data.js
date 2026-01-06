@@ -111,6 +111,72 @@ export const books = [
         ]
     },
     {
+        id: 12,
+        title: "Pir",
+        author: "Fotih Duman",
+        image: "https://assets.asaxiy.uz/product/items/desktop/5e15bc9d5926b.jpg", // Placeholder or generic
+        category: "novel",
+        type: "xorijiy",
+        pdfUrl: "#",
+        isRead: false,
+        questions: [
+            { id: 1, question: "Asar bosh qahramoni kim?", options: ["Yunus Emro", "Mavlono Rumiy", "Tabrizlik Shams", "Hoji Bektosh Valiy"], correctAnswer: 0 },
+            { id: 2, question: "'Pir' romani qaysi davrni yoritadi?", options: ["Saljuqiylar va Mo'g'ullar davri", "Temuriylar davri", "Usmoniylar davri", "Hozirgi zamon"], correctAnswer: 0 },
+            { id: 3, question: "Yunus Emro kimning dargohiga boradi?", options: ["Tabduq Emro", "Hoji Bektosh", "Rumiy", "G'azzoliy"], correctAnswer: 0 },
+            { id: 4, question: "Yunus Emro dargohda necha yil o'tin tasiydi?", options: ["40 yil", "20 yil", "10 yil", "5 yil"], correctAnswer: 0 },
+            { id: 5, question: "Tabduq Emro Yunusga nima deb o'rgatadi?", options: ["Egri o'tin dargohga kirmas", "Ko'p o'qi", "Jang qil", "Sayyohat qil"], correctAnswer: 0 },
+            { id: 6, question: "Asarda 'Ishq' tushunchasi qanday?", options: ["Ilohiy ishq", "Majoziy ishq", "Vatan ishqi", "Ota-ona ishqi"], correctAnswer: 0 },
+            { id: 7, question: "Mo'g'ullar bosqini qanday tasvirlangan?", options: ["Vayronakorlik va zulm", "Tinchlik", "Rivojlanish", "Do'stlik"], correctAnswer: 0 },
+            { id: 8, question: "Yunusning she'rlari qanday tilda?", options: ["Oddiy xalq tili (Turkiy)", "Fors", "Arab", "Lotin"], correctAnswer: 0 },
+            { id: 9, question: "Sariq chechak bilan suhbatlashgan kim?", options: ["Yunus Emro", "Tabduq Emro", "Mavlono", "Sulton Valad"], correctAnswer: 0 },
+            { id: 10, question: "Yunus Emro nima izlab yo'lga chiqadi?", options: ["Haqiqat va O'zlikni", "Boylik", "Mansab", "Shuhrat"], correctAnswer: 0 }
+        ]
+    },
+    {
+        id: 13,
+        title: "Dunyoning ishlari",
+        author: "O'tkir Hoshimov",
+        image: "https://kitobxon.com/img_knigi/926.jpg",
+        category: "story",
+        type: "ozbek",
+        pdfUrl: "#",
+        isRead: false,
+        questions: [
+            { id: 1, question: "Asar kimga bag'ishlangan?", options: ["Muallifning onasiga", "Otasiiga", "Do'stiga", "Ustoziga"], correctAnswer: 0 },
+            { id: 2, question: "'Gilam paypoq' hikoyasida ona o'g'liga nima to'qiydi?", options: ["Paypoq", "Sharfl", "Jemper", "Qo'lqop"], correctAnswer: 0 },
+            { id: 3, question: "'Oltin baldoq' hikoyasida ona nimani yo'qotib qo'yadi?", options: ["Baldoqni (sirg'ani)", "Uzukni", "Pulni", "Kalitni"], correctAnswer: 0 },
+            { id: 4, question: "O'tkir Hoshimovning onasi qanday inson bo'lgan?", options: ["Mehribon, sodda va fidoiy", "Qattiqqo'l", "Boy", "Kibirli"], correctAnswer: 0 },
+            { id: 5, question: "'Urushning so'nggi qurboni' hikoyasi qaysi to'plamga kiradi?", options: ["Dunyoning ishlari", "Bahor qaytmaydi", "Ikki eshik orasi", "Cho'l havosi"], correctAnswer: 0 },
+            { id: 6, question: "'Haqqush' hikoyasida nima haqida so'z boradi?", options: ["Yetim qolgan aka-uka haqida", "Qushlar haqida", "Ovchilar haqida", "Tabiat haqida"], correctAnswer: 0 },
+            { id: 7, question: "'Ikki afsona' hikoyasi nimani o'rgatadi?", options: ["Ona mehrini", "Do'stlikni", "Vatanparvarlikni", "Mehnatni"], correctAnswer: 0 },
+            { id: 8, question: "Asardagi hikoyalarni nima birlashtirib turadi?", options: ["Ona obrazi", "Urush mavzusi", "Tarixiy shaxslar", "Qishloq hayoti"], correctAnswer: 0 },
+            { id: 9, question: "Muallif bolaligida onasini nima bilan xafa qiladi?", options: ["O'yinqaroqligi bilan", "Yolg'onchiligi bilan", "O'g'riligi bilan", "Dars qilmasligi bilan"], correctAnswer: 0 },
+            { id: 10, question: "'Qarz' hikoyasida ona kimdan qarz oladi?", options: ["Qo'shnisidan", "Bankdan", "Qarindoshidan", "O'g'lidan"], correctAnswer: 0 }
+        ]
+    },
+    {
+        id: 14,
+        title: "Ufq",
+        author: "Said Ahmad",
+        image: "https://kitoblardunyosi.uz/image/cache/catalog/001-Kitoblar/002_Badiiy_adabiyot/o'zbek/ufq-roman-trilogiya-said-ahmad-lotin-web-500x500.jpg",
+        category: "novel",
+        type: "ozbek",
+        pdfUrl: "#",
+        isRead: false,
+        questions: [
+            { id: 1, question: "Ufq romani necha qismdan iborat?", options: ["Uch (Trilogiya)", "Ikki", "To'rt", "Bir"], correctAnswer: 0 },
+            { id: 2, question: "Asarning birinchi qismi qanday nomlanadi?", options: ["Qirq beshinchi kun", "Hijron kunlari", "Ufq bo'sag'asida", "Tong otganda"], correctAnswer: 0 },
+            { id: 3, question: "Ikromjon qanday obraz?", options: ["Mehnatkash, halol inson", "Sotqin", "Boy", "Dangasa"], correctAnswer: 0 },
+            { id: 4, question: "Jannat xola kim?", options: ["Ikromjonning xotini", "Tursunboyning onasi", "Raisning xotini", "Doktor"], correctAnswer: 0 },
+            { id: 5, question: "Tursunboy nima uchun qoralanadi?", options: ["Urushdan qochib kelgani (qochoq) uchun", "O'g'rilik uchun", "Qotillik uchun", "Yolg'on uchun"], correctAnswer: 0 },
+            { id: 6, question: "Asar voqealari qachon yuz beradi?", options: ["Ikkinchi jahon urushi va undan keyingi yillar", "Inqilob davri", "Hozirgi kun", "XIX asr"], correctAnswer: 0 },
+            { id: 7, question: "Katta Farg'ona kanali qurilishi qaysi qismda tasvirlanadi?", options: ["Qirq beshinchi kun", "Hijron kunlari", "Ufq bo'sag'asida", "Hech qaysisida"], correctAnswer: 0 },
+            { id: 8, question: "Azizxon kim?", options: ["Ikromjonning o'g'li (urushda qatnashgan)", "Tursunboyning do'sti", "Rais", "Sotuvchi"], correctAnswer: 0 },
+            { id: 9, question: "Nizomjon qanday yigit?", options: ["O'qimishli, zamonaviy", "Qo'rqoq", "Ayyor", "Savdogar"], correctAnswer: 0 },
+            { id: 10, question: "Said Ahmad bu asari uchun qanday mukofot olgan?", options: ["Hamza nomidagi Davlat mukofoti", "Oybek mukofoti", "Xalq yozuvchisi", "Navoiy mukofoti"], correctAnswer: 0 }
+        ]
+    },
+    {
         id: 3,
         title: "Shum bola",
         author: "G'afur G'ulom",

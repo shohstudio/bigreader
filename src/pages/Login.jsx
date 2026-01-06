@@ -54,7 +54,7 @@ export default function Login() {
             if (encryptedProfile) {
                 const legacyUser = decryptData(encryptedProfile);
                 const inputHash = hashPassword(password);
-                if (legacyUser && legacyUser.email === identifier && legacyUser.password === inputHash) {
+                if (legacyUser && (legacyUser.email === identifier || legacyUser.firstName?.toLowerCase() === identifier.toLowerCase()) && legacyUser.password === inputHash) {
                     localStorage.setItem('current_user', JSON.stringify({ ...legacyUser, role: 'user' }));
                     navigate('/');
                     return;
