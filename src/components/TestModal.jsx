@@ -12,10 +12,34 @@ export function TestModal({ isOpen, onClose, book }) {
     const startTest = () => {
         if (!book?.questions) return;
 
-        // Shuffle and pick 10 questions
-        const shuffled = [...book.questions].sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 10);
-        setQuestions(selected);
+        // Shuffle questions
+        const shuffledQuestions = [...book.questions].sort(() => 0.5 - Math.random());
+        const selectedQuestions = shuffledQuestions.slice(0, 10);
+
+        // Process each question to shuffle its options
+        const processedQuestions = selectedQuestions.map(q => {
+            // Create array of option objects with original index
+            const optionsWithIndex = q.options.map((opt, i) => ({
+                text: opt,
+                originalIndex: i
+            }));
+
+            // Shuffle options
+            const shuffledOptions = optionsWithIndex.sort(() => 0.5 - Math.random());
+
+            // Find new correct answer index
+            const newCorrectAnswer = shuffledOptions.findIndex(
+                item => item.originalIndex === q.correctAnswer
+            );
+
+            return {
+                ...q,
+                options: shuffledOptions.map(item => item.text),
+                correctAnswer: newCorrectAnswer
+            };
+        });
+
+        setQuestions(processedQuestions);
         setCurrentQuestionIndex(0);
         setScore(0);
         setCurrentStep('test');
